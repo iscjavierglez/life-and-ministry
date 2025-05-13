@@ -49,7 +49,9 @@ public class LifeAndMinistryApplication {
         @Override
         public void stop() {
             // Close the Spring context when the JavaFX application stops
-            springContext.close();
+            if (springContext != null) {
+                springContext.close();
+            }
             Platform.exit();
         }
     }

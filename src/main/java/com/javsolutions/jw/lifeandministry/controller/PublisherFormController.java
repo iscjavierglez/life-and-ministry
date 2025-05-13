@@ -5,6 +5,7 @@ import com.javsolutions.jw.lifeandministry.repository.PublisherRepository;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +44,11 @@ public class PublisherFormController {
     @FXML
     private Label messageLabel;
 
-    @Autowired
     private PublisherRepository publisherRepository;
+
+    public PublisherFormController(PublisherRepository publisherRepository) {
+        this.publisherRepository = publisherRepository;
+    }
 
     /**
      * Initialize the controller.

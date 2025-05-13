@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import lombok.extern.slf4j.Slf4j;
@@ -22,36 +23,39 @@ import java.util.List;
 public class PublishersController {
     @FXML
     private TableView<Publisher> publishersTable;
-    
+
     @FXML
     private TableColumn<Publisher, String> nameColumn;
-    
+
     @FXML
     private TableColumn<Publisher, String> genderColumn;
-    
+
     @FXML
     private TableColumn<Publisher, String> privilegeColumn;
-    
+
     @FXML
     private TableColumn<Publisher, Boolean> activeColumn;
-    
+
     @FXML
     private TextField searchField;
-    
+
     @FXML
     private Button addButton;
-    
+
     @FXML
     private Button editButton;
-    
+
     @FXML
     private Button deleteButton;
-    
-    @Autowired
+
     private PublisherRepository publisherRepository;
-    
+
     private ObservableList<Publisher> publishersList = FXCollections.observableArrayList();
-    
+
+    public PublishersController(PublisherRepository publisherRepository) {
+        this.publisherRepository = publisherRepository;
+    }
+
     /**
      * Initialize the controller.
      * This method is called after the FXML fields have been injected.
@@ -59,18 +63,23 @@ public class PublishersController {
     @FXML
     public void initialize() {
         log.info("Initializing PublishersController");
-        
+
         // Configure the table columns
         nameColumn.setCellValueFactory(cellData -> {
             Publisher publisher = cellData.getValue();
-            String fullName = publisher.getFirstName() + " " + publisher.getLastName();
+            if (publisher == null) {
+                return javafx.beans.binding.Bindings.createStringBinding(() -> "");
+            }
+            String firstName = publisher.getFirstName() != null ? publisher.getFirstName() : "";
+            String lastName = publisher.getLastName() != null ? publisher.getLastName() : "";
+            String fullName = firstName + " " + lastName;
             return javafx.beans.binding.Bindings.createStringBinding(() -> fullName);
         });
-        
+
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
         privilegeColumn.setCellValueFactory(new PropertyValueFactory<>("privilege"));
         activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
-        
+
         // Format the active column to display checkmarks
         activeColumn.setCellFactory(column -> new TableCell<>() {
             @Override
@@ -83,16 +92,15 @@ public class PublishersController {
                 }
             }
         });
-        
+
         // Load publishers from the database
         loadPublishers();
-        
+
         // Set up search functionality
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filterPublishers(newValue);
-        });
+        searchField.textProperty()
+                .addListener((observable, oldValue, newValue) -> filterPublishers(newValue));
     }
-    
+
     /**
      * Loads publishers from the database and displays them in the TableView.
      */
@@ -108,7 +116,7 @@ public class PublishersController {
             log.error("Error loading publishers", e);
         }
     }
-    
+
     /**
      * Filters the publishers list based on the search text.
      * 
@@ -119,22 +127,23 @@ public class PublishersController {
             publishersTable.setItems(publishersList);
             return;
         }
-        
+
         ObservableList<Publisher> filteredList = FXCollections.observableArrayList();
         String lowerCaseFilter = searchText.toLowerCase();
-        
+
         for (Publisher publisher : publishersList) {
-            if (publisher.getFirstName().toLowerCase().contains(lowerCaseFilter) ||
-                publisher.getLastName().toLowerCase().contains(lowerCaseFilter) ||
-                publisher.getShortName().toLowerCase().contains(lowerCaseFilter) ||
-                publisher.getPrivilege().toLowerCase().contains(lowerCaseFilter)) {
+            // Safely check if any field contains the filter text, handling null values
+            if (containsIgnoreCase(publisher.getFirstName(), lowerCaseFilter) ||
+                containsIgnoreCase(publisher.getLastName(), lowerCaseFilter) ||
+                containsIgnoreCase(publisher.getShortName(), lowerCaseFilter) ||
+                containsIgnoreCase(publisher.getPrivilege(), lowerCaseFilter)) {
                 filteredList.add(publisher);
             }
         }
-        
+
         publishersTable.setItems(filteredList);
     }
-    
+
     /**
      * Handles the add button click event.
      */
@@ -143,7 +152,7 @@ public class PublishersController {
         log.info("Add button clicked");
         // This would typically open a dialog or navigate to a form to add a new publisher
     }
-    
+
     /**
      * Handles the edit button click event.
      */
@@ -158,7 +167,7 @@ public class PublishersController {
             log.info("No publisher selected for editing");
         }
     }
-    
+
     /**
      * Handles the delete button click event.
      */
@@ -173,12 +182,24 @@ public class PublishersController {
             log.info("No publisher selected for deletion");
         }
     }
-    
+
     /**
      * Refreshes the publishers list from the database.
      * This can be called from other controllers when a publisher is added or updated.
      */
     public void refreshPublishers() {
         loadPublishers();
+    }
+
+    /**
+     * Helper method to check if a string contains another string, ignoring case.
+     * Safely handles null values.
+     * 
+     * @param source the source string to check
+     * @param target the substring to look for
+     * @return true if source contains target (ignoring case), false otherwise or if either is null
+     */
+    private boolean containsIgnoreCase(String source, String target) {
+        return source != null && target != null && source.toLowerCase().contains(target);
     }
 }
