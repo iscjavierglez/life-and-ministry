@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javsolutions.jw.lifeandministry.controller.PublishersController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Publishers Management" />
+
+    <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+        <!-- Publishers List -->
+        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Publishers List" />
+            <TextField fx:id="searchField" promptText="Search publishers..." />
+            <TableView fx:id="publishersTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="nameColumn" text="Name" />
+                    <TableColumn fx:id="genderColumn" text="Gender" />
+                    <TableColumn fx:id="privilegeColumn" text="Privilege" />
+                    <TableColumn fx:id="activeColumn" text="Active" />
+                </columns>
+            </TableView>
+            <HBox spacing="10.0">
+                <Button fx:id="addButton" text="Add New" onAction="#onAddButtonClick" />
+                <Button fx:id="editButton" text="Edit" onAction="#onEditButtonClick" />
+                <Button fx:id="deleteButton" text="Delete" onAction="#onDeleteButtonClick" />
+            </HBox>
+        </VBox>
+
+        <!-- Publisher Form (will be loaded from publisher-form.fxml) -->
+        <VBox fx:id="publisherFormContainer" prefWidth="300.0" style="-fx-background-color: #f8f8f8; -fx-background-radius: 5;">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+            <fx:include source="publisher-form.fxml" />
+        </VBox>
+    </HBox>
+</VBox>
