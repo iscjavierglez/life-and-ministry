@@ -21,15 +21,23 @@ module com.javsolutions.jw.lifeandministry {
     requires org.mongodb.bson;
     requires org.mongodb.driver.core;
 
+    // Lombok
+    requires static lombok;
+
+    // Logging
+    requires org.slf4j;
+
     // Open packages to JavaFX and Spring
     opens com.javsolutions.jw.lifeandministry to javafx.fxml, spring.core;
     opens com.javsolutions.jw.lifeandministry.model to spring.core;
     opens com.javsolutions.jw.lifeandministry.repository to spring.core;
     opens com.javsolutions.jw.lifeandministry.config to spring.core;
+    opens com.javsolutions.jw.lifeandministry.controller to javafx.fxml, spring.core;
 
     // Export packages
     exports com.javsolutions.jw.lifeandministry;
     exports com.javsolutions.jw.lifeandministry.model;
     exports com.javsolutions.jw.lifeandministry.repository;
     exports com.javsolutions.jw.lifeandministry.config;
+    exports com.javsolutions.jw.lifeandministry.controller;
 }

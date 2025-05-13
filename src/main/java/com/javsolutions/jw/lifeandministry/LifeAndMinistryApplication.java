@@ -23,7 +23,7 @@ public class LifeAndMinistryApplication {
     public static void main(String[] args) {
         // Start the Spring Boot application
         springContext = SpringApplication.run(LifeAndMinistryApplication.class, args);
-        
+
         // Launch the JavaFX application
         Application.launch(JavaFxApplication.class, args);
     }
@@ -32,19 +32,20 @@ public class LifeAndMinistryApplication {
      * JavaFX application class that is launched by the main method.
      */
     public static class JavaFxApplication extends Application {
-        
+
         @Override
         public void init() {
             // No need to initialize MongoDB connection here as Spring Boot will handle it
         }
-        
+
         @Override
         public void start(Stage stage) throws Exception {
-            // Get the HelloController from the Spring context
+            // Set the Spring context for the FXMLLoaderFactory
             FXMLLoaderFactory.setSpringContext(springContext);
-            FXMLLoaderFactory.loadFxmlAndShow("hello-view.fxml", "Life and Ministry", stage);
+            // Load and show the application view
+            FXMLLoaderFactory.loadFxmlAndShow("application-view.fxml", "Life and Ministry", stage);
         }
-        
+
         @Override
         public void stop() {
             // Close the Spring context when the JavaFX application stops
