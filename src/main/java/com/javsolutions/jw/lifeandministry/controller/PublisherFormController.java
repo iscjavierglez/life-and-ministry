@@ -5,19 +5,17 @@ import com.javsolutions.jw.lifeandministry.service.PublisherService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controller for the publisher-form.fxml file.
  * This controller handles the form for adding new publishers.
  */
-@Slf4j
 @Controller
 public class PublisherFormController {
     @FXML
@@ -47,6 +45,8 @@ public class PublisherFormController {
     private static final String ERROR_STYLE = "-fx-text-fill: red;";
 
     private final PublisherService publisherService;
+
+    private static final Logger log = LoggerFactory.getLogger(PublisherFormController.class);
 
     public PublisherFormController(PublisherService publisherService) {
         this.publisherService = publisherService;
