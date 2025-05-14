@@ -1,7 +1,7 @@
 package com.javsolutions.jw.lifeandministry.controller;
 
 import com.javsolutions.jw.lifeandministry.model.Publisher;
-import com.javsolutions.jw.lifeandministry.repository.PublisherRepository;
+import com.javsolutions.jw.lifeandministry.service.PublisherService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -44,10 +44,12 @@ public class PublisherFormController {
     @FXML
     private Label messageLabel;
 
-    private PublisherRepository publisherRepository;
+    private static final String ERROR_STYLE = "-fx-text-fill: red;";
 
-    public PublisherFormController(PublisherRepository publisherRepository) {
-        this.publisherRepository = publisherRepository;
+    private final PublisherService publisherService;
+
+    public PublisherFormController(PublisherService publisherService) {
+        this.publisherService = publisherService;
     }
 
     /**
@@ -97,7 +99,7 @@ public class PublisherFormController {
                     .build();
 
             // Save the publisher to the database
-            publisherRepository.save(publisher);
+            publisherService.save(publisher);
 
             // Show success message
             messageLabel.setText("Publisher saved successfully!");
@@ -110,7 +112,7 @@ public class PublisherFormController {
         } catch (Exception e) {
             // Show error message
             messageLabel.setText("Error saving publisher: " + e.getMessage());
-            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setStyle(ERROR_STYLE);
             log.error("Error saving publisher", e);
         }
     }
@@ -135,31 +137,31 @@ public class PublisherFormController {
         // Check if required fields are filled
         if (firstNameField.getText().isEmpty()) {
             messageLabel.setText("First name is required");
-            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setStyle(ERROR_STYLE);
             return false;
         }
 
         if (lastNameField.getText().isEmpty()) {
             messageLabel.setText("Last name is required");
-            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setStyle(ERROR_STYLE);
             return false;
         }
 
         if (shortNameField.getText().isEmpty()) {
             messageLabel.setText("Short name is required");
-            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setStyle(ERROR_STYLE);
             return false;
         }
 
         if (genderComboBox.getValue() == null) {
             messageLabel.setText("Gender is required");
-            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setStyle(ERROR_STYLE);
             return false;
         }
 
         if (privilegeComboBox.getValue() == null) {
             messageLabel.setText("Privilege is required");
-            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setStyle(ERROR_STYLE);
             return false;
         }
 

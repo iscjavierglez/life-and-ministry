@@ -1,14 +1,13 @@
 package com.javsolutions.jw.lifeandministry.controller;
 
 import com.javsolutions.jw.lifeandministry.model.Publisher;
-import com.javsolutions.jw.lifeandministry.repository.PublisherRepository;
+import com.javsolutions.jw.lifeandministry.service.PublisherService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,12 +47,12 @@ public class PublishersController {
     @FXML
     private Button deleteButton;
 
-    private PublisherRepository publisherRepository;
+    private final PublisherService publisherService;
 
     private ObservableList<Publisher> publishersList = FXCollections.observableArrayList();
 
-    public PublishersController(PublisherRepository publisherRepository) {
-        this.publisherRepository = publisherRepository;
+    public PublishersController(PublisherService publisherService) {
+        this.publisherService = publisherService;
     }
 
     /**
@@ -107,7 +106,7 @@ public class PublishersController {
     private void loadPublishers() {
         try {
             log.info("Loading publishers from database");
-            List<Publisher> publishers = publisherRepository.findAll();
+            List<Publisher> publishers = publisherService.findAll();
             publishersList.clear();
             publishersList.addAll(publishers);
             publishersTable.setItems(publishersList);

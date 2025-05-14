@@ -40,4 +40,5 @@ module com.javsolutions.jw.lifeandministry {
     exports com.javsolutions.jw.lifeandministry.repository;
     exports com.javsolutions.jw.lifeandministry.config;
     exports com.javsolutions.jw.lifeandministry.controller;
+    exports com.javsolutions.jw.lifeandministry.service;
 }
