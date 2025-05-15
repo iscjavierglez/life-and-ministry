@@ -7,9 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -17,9 +16,9 @@ import java.util.List;
  * Controller for the publishers-view.fxml file.
  * This controller handles the display of publishers in a TableView.
  */
+@Slf4j
 @Controller
 public class PublishersController {
-    private static final Logger log = LoggerFactory.getLogger(PublishersController.class);
 
     @FXML
     private TableView<Publisher> publishersTable;

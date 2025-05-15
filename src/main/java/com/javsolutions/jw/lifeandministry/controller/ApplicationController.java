@@ -7,8 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import org.springframework.stereotype.Controller;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
@@ -18,9 +17,9 @@ import com.javsolutions.jw.lifeandministry.FXMLLoaderFactory;
  * Controller for the application-view.fxml file.
  * This is the main controller for the application.
  */
+@Slf4j
 @Controller
 public class ApplicationController {
-    private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
     @FXML
     private Button homeButton;
