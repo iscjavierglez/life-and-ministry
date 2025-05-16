@@ -40,4 +40,8 @@ public class AssignationService {
     public Assignation update(Assignation assignation) {
         return assignationRepository.save(assignation);
     }
+
+    public List<Assignation> findByPublisherOrderByDateAsc(Publisher publisher) {
+        return assignationRepository.findByPublisherOrderByDateAsc(publisher);
+    }
 }

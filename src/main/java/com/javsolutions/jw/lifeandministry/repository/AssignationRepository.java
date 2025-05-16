@@ -10,4 +10,5 @@ import com.javsolutions.jw.lifeandministry.model.Publisher;
 @Repository
 public interface AssignationRepository extends MongoRepository<Assignation, ObjectId> {
     List<Assignation> findByPublisher(Publisher publisher);
+    List<Assignation> findByPublisherOrderByDateAsc(Publisher publisher);
 }

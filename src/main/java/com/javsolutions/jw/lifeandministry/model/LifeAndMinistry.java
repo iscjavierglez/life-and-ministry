@@ -21,6 +21,7 @@ public class LifeAndMinistry {
     @Id
     private ObjectId id;
     private String title;
+    private Assignation president;
     private List<String> songs;
     private List<Assignation> treasuresFromGod;
     private List<Assignation> applyToTheFieldMinistry;

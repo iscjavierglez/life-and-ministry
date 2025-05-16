@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javsolutions.jw.lifeandministry.controller.LifeAndMinistryController" spacing="10" alignment="TOP_CENTER" style="-fx-padding: 20;">
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Month:" />
+        <ComboBox fx:id="monthComboBox" prefWidth="150" />
+        <Button text="Load" onAction="#onLoadButtonClick" />
+        <Button text="Add New" onAction="#onAddButtonClick" />
+    </HBox>
+    <TableView fx:id="lifeAndMinistryTable" prefHeight="400" prefWidth="800">
+        <columns>
+            <TableColumn fx:id="titleColumn" text="Title" prefWidth="200" />
+            <TableColumn fx:id="songsColumn" text="Songs" prefWidth="150" />
+            <TableColumn fx:id="treasuresColumn" text="Treasures From God" prefWidth="150" />
+            <TableColumn fx:id="fieldMinistryColumn" text="Apply to the Field Ministry" prefWidth="150" />
+            <TableColumn fx:id="livingChristiansColumn" text="Living as Christians" prefWidth="150" />
+        </columns>
+    </TableView>
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Edit" onAction="#onEditButtonClick" />
+        <Button text="Delete" onAction="#onDeleteButtonClick" />
+    </HBox>
+</VBox>

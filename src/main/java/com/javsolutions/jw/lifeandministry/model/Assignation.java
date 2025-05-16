@@ -22,6 +22,8 @@ public class Assignation {
     @Id
     private ObjectId id;
     private String name;
+    private int duration; // in minutes
+    private AssignationType type;
     private LocalDate date;
     @DBRef
     private Publisher publisher;

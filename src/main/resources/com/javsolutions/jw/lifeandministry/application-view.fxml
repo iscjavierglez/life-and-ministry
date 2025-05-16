@@ -24,6 +24,7 @@
             <Button fx:id="scheduleButton" maxWidth="Infinity" onAction="#onScheduleButtonClick" text="Schedule" />
             <Button fx:id="reportsButton" maxWidth="Infinity" onAction="#onReportsButtonClick" text="Reports" />
             <Button fx:id="settingsButton" maxWidth="Infinity" onAction="#onSettingsButtonClick" text="Settings" />
+            <Button fx:id="lifeAndMinistryButton" maxWidth="Infinity" onAction="#onLifeAndMinistryButtonClick" text="Life &amp; Ministry" />
         </VBox>
     </left>
     <center>

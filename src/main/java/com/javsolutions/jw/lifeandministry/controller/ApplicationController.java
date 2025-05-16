@@ -37,6 +37,9 @@ public class ApplicationController {
     private Button settingsButton;
 
     @FXML
+    private Button lifeAndMinistryButton;
+
+    @FXML
     private Label statusLabel;
 
     @FXML
@@ -117,5 +120,15 @@ public class ApplicationController {
         log.info("Settings button clicked");
         statusLabel.setText("Settings section selected");
         loadView("/com/javsolutions/jw/lifeandministry/settings-view.fxml");
+    }
+
+    /**
+     * Handles the Life and Ministry button click event.
+     */
+    @FXML
+    protected void onLifeAndMinistryButtonClick() {
+        log.info("Life and Ministry button clicked");
+        statusLabel.setText("Life and Ministry section selected");
+        loadView("/com/javsolutions/jw/lifeandministry/life-and-ministry-view.fxml");
     }
 }
