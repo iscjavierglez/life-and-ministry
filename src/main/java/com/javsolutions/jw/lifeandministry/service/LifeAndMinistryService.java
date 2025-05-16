@@ -24,7 +24,19 @@ public class LifeAndMinistryService {
         return lifeAndMinistryRepository.findById(id);
     }
 
+    public Optional<LifeAndMinistry> findByMonth(String month) {
+        return lifeAndMinistryRepository.findByMonth(month);
+    }
+
+    public List<LifeAndMinistry> findAllByMonth(String month) {
+        return lifeAndMinistryRepository.findAllByMonth(month);
+    }
+
     public LifeAndMinistry save(LifeAndMinistry lifeAndMinistry) {
+        return lifeAndMinistryRepository.save(lifeAndMinistry);
+    }
+
+    public LifeAndMinistry update(LifeAndMinistry lifeAndMinistry) {
         return lifeAndMinistryRepository.save(lifeAndMinistry);
     }
 

@@ -1,6 +1,7 @@
 package com.javsolutions.jw.lifeandministry.service;
 
 import com.javsolutions.jw.lifeandministry.model.Assignation;
+import com.javsolutions.jw.lifeandministry.model.Publisher;
 import com.javsolutions.jw.lifeandministry.repository.AssignationRepository;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,13 @@ public class AssignationService {
 
     public void deleteById(ObjectId id) {
         assignationRepository.deleteById(id);
+    }
+
+    public List<Assignation> findByPublisher(Publisher publisher) {
+        return assignationRepository.findByPublisher(publisher);
+    }
+
+    public Assignation update(Assignation assignation) {
+        return assignationRepository.save(assignation);
     }
 }

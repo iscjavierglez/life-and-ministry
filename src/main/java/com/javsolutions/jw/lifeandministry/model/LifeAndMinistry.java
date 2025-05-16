@@ -25,4 +25,5 @@ public class LifeAndMinistry {
     private List<Assignation> treasuresFromGod;
     private List<Assignation> applyToTheFieldMinistry;
     private List<Assignation> livingAsChristians;
+    private String month;
 }
