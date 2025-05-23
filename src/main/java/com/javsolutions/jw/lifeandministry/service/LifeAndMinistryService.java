@@ -20,8 +20,8 @@ public class LifeAndMinistryService {
         return lifeAndMinistryRepository.findAll();
     }
 
-    public Optional<LifeAndMinistry> findById(ObjectId id) {
-        return lifeAndMinistryRepository.findById(id);
+    public Optional<LifeAndMinistry> findById(String id) {
+        return lifeAndMinistryRepository.findById(new ObjectId(id));
     }
 
     public Optional<LifeAndMinistry> findByMonth(String month) {
@@ -40,7 +40,7 @@ public class LifeAndMinistryService {
         return lifeAndMinistryRepository.save(lifeAndMinistry);
     }
 
-    public void deleteById(ObjectId id) {
-        lifeAndMinistryRepository.deleteById(id);
+    public void deleteById(String id) {
+        lifeAndMinistryRepository.deleteById(new ObjectId(id));
     }
 }

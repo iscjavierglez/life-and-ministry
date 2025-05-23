@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Hello World</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 th:text="${title}">Hello World</h1>
+        </header>
+        
+        <main>
+            <div class="message-box">
+                <h2 th:text="${message}">Welcome message will appear here</h2>
+                <p>This is a simple Thymeleaf example for the Life and Ministry Application.</p>
+            </div>
+            
+            <div class="navigation">
+                <p>You can navigate to <a th:href="@{/hello}">Hello World page</a> or return to <a th:href="@{/}">Home page</a>.</p>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2023 Life and Ministry Application</p>
+        </footer>
+    </div>
+</body>
+</html>

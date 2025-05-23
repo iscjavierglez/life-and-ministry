@@ -1,0 +1,202 @@
+/* Main styles for Life and Ministry application */
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background-color: #4a76a8;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+main {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.message-box {
+    background-color: #e8f4ff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border-left: 4px solid #4a76a8;
+}
+
+.message-box h2 {
+    color: #4a76a8;
+    margin-bottom: 10px;
+}
+
+.navigation {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.navigation a {
+    color: #4a76a8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navigation a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    color: #777;
+    font-size: 0.9em;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    background-color: #4a6da7 !important;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    color: white !important;
+}
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    margin-bottom: 60px; /* Space for footer */
+}
+
+/* Footer Styles */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Card Styles */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.home-card {
+    height: 100%;
+    transition: transform 0.3s;
+}
+
+.home-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Table Styles */
+.table th {
+    background-color: #343a40;
+    color: white;
+}
+
+/* Form Styles */
+.form-control:focus, .form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Active navigation link */
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    
+    .footer {
+        position: relative;
+        margin-top: 20px;
+    }
+}
+.card {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #f0f2f5;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: #4a6da7;
+    border-color: #4a6da7;
+}
+
+.btn-primary:hover {
+    background-color: #3a5a8f;
+    border-color: #3a5a8f;
+}
+
+.table th {
+    background-color: #f0f2f5;
+}
+
+.footer {
+    margin-top: 50px;
+    padding: 20px 0;
+    background-color: #f0f2f5;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Custom styles for specific pages */
+.home-card {
+    transition: transform 0.3s;
+}
+
+.home-card:hover {
+    transform: translateY(-5px);
+}

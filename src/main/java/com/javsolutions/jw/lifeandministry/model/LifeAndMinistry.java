@@ -22,9 +22,13 @@ public class LifeAndMinistry {
     private ObjectId id;
     private String title;
     private Assignation president;
-    private List<String> songs;
-    private List<Assignation> treasuresFromGod;
-    private List<Assignation> applyToTheFieldMinistry;
-    private List<Assignation> livingAsChristians;
+    @Builder.Default
+    private List<String> songs = new java.util.ArrayList<>();
+    @Builder.Default
+    private List<Assignation> treasuresFromGod = new java.util.ArrayList<>();
+    @Builder.Default
+    private List<Assignation> applyToTheFieldMinistry = new java.util.ArrayList<>();
+    @Builder.Default
+    private List<Assignation> livingAsChristians = new java.util.ArrayList<>();
     private String month;
 }
