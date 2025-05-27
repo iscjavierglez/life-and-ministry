@@ -20,15 +20,6 @@ import java.util.List;
 public class LifeAndMinistry {
     @Id
     private ObjectId id;
-    private String title;
-    private Assignation president;
-    @Builder.Default
-    private List<String> songs = new java.util.ArrayList<>();
-    @Builder.Default
-    private List<Assignation> treasuresFromGod = new java.util.ArrayList<>();
-    @Builder.Default
-    private List<Assignation> applyToTheFieldMinistry = new java.util.ArrayList<>();
-    @Builder.Default
-    private List<Assignation> livingAsChristians = new java.util.ArrayList<>();
     private String month;
+    private List<WeeklyProgram> weeklyProgram;
 }
