@@ -1,31 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title}">Hello World</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/layout :: head(${title})">
 </head>
 <body>
-    <div class="container">
-        <header>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+    
+    <div class="container mt-4">
+        <header class="text-center mb-4">
             <h1 th:text="${title}">Hello World</h1>
         </header>
         
         <main>
-            <div class="message-box">
-                <h2 th:text="${message}">Welcome message will appear here</h2>
-                <p>This is a simple Thymeleaf example for the Life and Ministry Application.</p>
-            </div>
-            
-            <div class="navigation">
-                <p>You can navigate to <a th:href="@{/hello}">Hello World page</a> or return to <a th:href="@{/}">Home page</a>.</p>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title" th:text="${message}">Welcome message will appear here</h2>
+                    <p class="card-text">This is a simple Thymeleaf example for the Life and Ministry Application.</p>
+                    
+                    <div class="mt-4">
+                        <p>You can navigate to:</p>
+                        <div class="d-flex gap-2">
+                            <a th:href="@{/publishers}" class="btn btn-primary">
+                                <i class="bi bi-people-fill"></i> Publishers
+                            </a>
+                            <a th:href="@{/}" class="btn btn-outline-secondary">
+                                <i class="bi bi-house-fill"></i> Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
-        
-        <footer>
-            <p>&copy; 2023 Life and Ministry Application</p>
-        </footer>
     </div>
+
+    <footer th:replace="fragments/layout :: footer"></footer>
+    <th:block th:replace="fragments/layout :: scripts"></th:block>
 </body>
 </html>

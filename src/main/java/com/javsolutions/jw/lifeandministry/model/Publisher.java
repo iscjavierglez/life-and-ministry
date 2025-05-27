@@ -30,7 +30,7 @@ public class Publisher {
     private String shortName;
     private String gender;
     private String privilege;
-    private boolean isMatriculated;
+    private boolean matriculated;
 
     @Builder.Default
     private Date dateAdded = new Date();

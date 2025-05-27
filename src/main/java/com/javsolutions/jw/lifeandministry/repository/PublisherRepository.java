@@ -59,7 +59,7 @@ public interface PublisherRepository extends MongoRepository<Publisher, ObjectId
      * 
      * @return a list of matriculated publishers
      */
-    List<Publisher> findByIsMatriculatedTrue();
+    List<Publisher> findByMatriculatedTrue();
 
     /**
      * Update a publisher's active status.

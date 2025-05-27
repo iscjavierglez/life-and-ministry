@@ -21,27 +21,21 @@ import java.util.Collections;
 @EnableMongoRepositories(basePackages = "com.javsolutions.jw.lifeandministry.repository")
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
-    @Value("${spring.data.mongodb.host:localhost}")
-    private String host;
-
-    @Value("${spring.data.mongodb.port:27017}")
-    private int port;
-
-    @Value("${spring.data.mongodb.database:lifeandministry}")
-    private String database;
-
-    @Override
-    protected String getDatabaseName() {
-        return database;
-    }
+    @Value("${spring.data.mongodb.uri}")
+    private String connectionString;
 
     @Override
     public MongoClient mongoClient() {
-        ConnectionString connectionString = new ConnectionString("mongodb://" + host + ":" + port + "/" + database);
+        ConnectionString connection = new ConnectionString(connectionString);
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
+                .applyConnectionString(connection)
                 .build();
         return MongoClients.create(mongoClientSettings);
+    }
+
+    @Override
+    protected String getDatabaseName() {
+        return "jwcluster";
     }
 
     @Override
