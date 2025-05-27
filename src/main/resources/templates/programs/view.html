@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/layout :: head('Life and Ministry Program')">
+</head>
+<body>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+
+    <div class="container mt-4">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Life and Ministry Program - <span th:text="${program.month}"></span></h1>
+            <div>
+                <a th:href="@{/programs/list}" class="btn btn-outline-secondary btn-icon me-2">
+                    <i class="bi bi-list"></i> All Programs
+                </a>
+                <a th:href="@{/programs/edit/{id}(id=${program.id})}" class="btn btn-primary btn-icon">
+                    <i class="bi bi-pencil"></i> Edit Program
+                </a>
+            </div>
+        </div>
+
+        <!-- Success/Error Messages -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Weekly Programs -->
+        <div th:each="weekProgram, weekStat : ${program.weeklyProgram}" class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0" th:text="${weekProgram.title}"></h4>
+            </div>
+            <div class="card-body">
+                <!-- President Section -->
+                <div class="mb-4" th:if="${weekProgram.president != null}">
+                    <div class="d-flex justify-content-between align-items-center p-2 bg-light">
+                        <h5 class="mb-0">Presidente</h5>
+                        <span th:text="${weekProgram.president.publisherShortName}"></span>
+                    </div>
+                </div>
+
+                <!-- Song 1 -->
+                <div class="mb-4" th:if="${weekProgram.song1 != null and !weekProgram.song1.isEmpty()}">
+                    <div class="p-2 bg-light">
+                        <h5 class="mb-0">Canción <span th:text="${weekProgram.song1}"></span></h5>
+                    </div>
+                </div>
+
+                <!-- Treasures from God Section -->
+                <div class="mb-4">
+                    <h5 class="section-title bg-secondary text-white p-2">Tesoros de la biblia</h5>
+                    <div th:if="${#lists.isEmpty(weekProgram.treasuresFromGod)}" class="text-muted p-2">
+                        No assignations in this section
+                    </div>
+                    <div th:each="assignation : ${weekProgram.treasuresFromGod}" 
+                         class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                        <div>
+                            <span th:text="${assignation.name}"></span>
+                            <span class="text-muted ms-2" th:text="'(' + ${assignation.duration} + ' min)'"></span>
+                        </div>
+                        <span th:text="${assignation.publisherShortName}"></span>
+                    </div>
+                </div>
+
+                <!-- Apply to the Field Ministry Section -->
+                <div class="mb-4">
+                    <h5 class="section-title bg-secondary text-white p-2">Seamos mejores maestros</h5>
+                    <div th:if="${#lists.isEmpty(weekProgram.applyToTheFieldMinistry)}" class="text-muted p-2">
+                        No assignations in this section
+                    </div>
+                    <div th:each="assignation : ${weekProgram.applyToTheFieldMinistry}" 
+                         class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                        <div>
+                            <span th:text="${assignation.name}"></span>
+                            <span class="text-muted ms-2" th:text="'(' + ${assignation.duration} + ' min)'"></span>
+                        </div>
+                        <span th:text="${assignation.publisherShortName}"></span>
+                    </div>
+                </div>
+
+                <!-- Song 2 -->
+                <div class="mb-4" th:if="${weekProgram.song2 != null and !weekProgram.song2.isEmpty()}">
+                    <div class="p-2 bg-light">
+                        <h5 class="mb-0">Canción <span th:text="${weekProgram.song2}"></span></h5>
+                    </div>
+                </div>
+
+                <!-- Living as Christians Section -->
+                <div class="mb-4">
+                    <h5 class="section-title bg-secondary text-white p-2">Nuestra vida cristiana</h5>
+                    <div th:if="${#lists.isEmpty(weekProgram.livingAsChristians)}" class="text-muted p-2">
+                        No assignations in this section
+                    </div>
+                    <div th:each="assignation : ${weekProgram.livingAsChristians}" 
+                         class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                        <div>
+                            <span th:text="${assignation.name}"></span>
+                            <span class="text-muted ms-2" th:text="'(' + ${assignation.duration} + ' min)'"></span>
+                        </div>
+                        <span th:text="${assignation.publisherShortName}"></span>
+                    </div>
+                </div>
+
+                <!-- Song 3 -->
+                <div class="mb-4" th:if="${weekProgram.song3 != null and !weekProgram.song3.isEmpty()}">
+                    <div class="p-2 bg-light">
+                        <h5 class="mb-0">Canción <span th:text="${weekProgram.song3}"></span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="fragments/layout :: footer"></footer>
+    <th:block th:replace="fragments/layout :: scripts"></th:block>
+</body>
+</html>

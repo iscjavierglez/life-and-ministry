@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/layout :: head(${program.id != null ? 'Edit Program' : 'New Program'})">
+</head>
+<body>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+
+    <div class="container-fluid mt-4">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 th:text="${program.id != null ? 'Edit Program' : 'New Program'}"></h1>
+            <a th:href="@{/programs}" class="btn btn-outline-secondary btn-icon">
+                <i class="bi bi-arrow-left"></i> Back to Programs
+            </a>
+        </div>
+
+        <!-- Program Form -->
+        <form th:action="${program.id != null ? '/programs/edit/' + program.id : '/programs'}" 
+              th:object="${program}" method="post" id="programForm">
+
+            <input type="hidden" th:field="*{id}" />
+
+            <!-- Program Basic Info Card -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Program Information</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="month" class="form-label">Month</label>
+                                <select class="form-select" id="month" th:field="*{month}" required>
+                                    <option value="">-- Select Month --</option>
+                                    <option th:each="monthOption : ${months}" 
+                                            th:value="${monthOption}" 
+                                            th:text="${monthOption}"
+                                            th:selected="${monthOption == currentMonth}"></option>
+                                </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('month')}" th:errors="*{month}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Programs -->
+            <div th:each="weekProgram, weekStat : *{weeklyProgram}" class="card mb-4">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <input type="text" class="form-control me-2" th:field="*{weeklyProgram[__${weekStat.index}__].title}" required>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-danger" 
+                            th:if="${program.id != null}"
+                            th:onclick="'window.location.href=\'' + @{/programs/{id}/remove-week/{weekIndex}(id=${program.id},weekIndex=${weekStat.index})} + '\''"
+                            th:disabled="${#lists.size(program.weeklyProgram) <= 1}">
+                        <i class="bi bi-trash"></i> Remove Week
+                    </button>
+                </div>
+                <div class="card-body">
+                    <!-- President Section -->
+                    <div class="mb-4">
+                        <h5 class="section-title">Presidente</h5>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="flex-grow-1 me-2">
+                                <input type="text" class="form-control" 
+                                       th:field="*{weeklyProgram[__${weekStat.index}__].president.name}" 
+                                       placeholder="Assignation Name">
+                            </div>
+                            <div class="flex-grow-1 me-2">
+                                <select class="form-select" 
+                                        th:field="*{weeklyProgram[__${weekStat.index}__].president.publisherId}">
+                                    <option value="">-- Select Publisher --</option>
+                                    <option th:each="publisher : ${publishers}" 
+                                            th:value="${publisher.id}" 
+                                            th:text="${publisher.shortName}"></option>
+                                </select>
+                            </div>
+                            <div style="width: 100px;">
+                                <input type="number" class="form-control" 
+                                       th:field="*{weeklyProgram[__${weekStat.index}__].president.duration}" 
+                                       placeholder="Minutes" min="1">
+                            </div>
+                            <input type="hidden" 
+                                   th:field="*{weeklyProgram[__${weekStat.index}__].president.type}" 
+                                   value="PRESIDENTE">
+                        </div>
+                    </div>
+
+                    <!-- Song 1 -->
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label">Canción 1</label>
+                                <input type="text" class="form-control" 
+                                       th:field="*{weeklyProgram[__${weekStat.index}__].song1}" 
+                                       placeholder="Song Number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Treasures from God Section -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="section-title">Tesoros de la biblia</h5>
+                            <button type="button" class="btn btn-sm btn-success add-assignation" 
+                                    data-section="treasuresFromGod" 
+                                    th:data-week-index="${weekStat.index}">
+                                <i class="bi bi-plus-circle"></i> Add Assignation
+                            </button>
+                        </div>
+                        <div class="assignation-container">
+                            <div th:each="assignation, assignStat : *{weeklyProgram[__${weekStat.index}__].treasuresFromGod}" 
+                                 class="d-flex align-items-center mb-2">
+                                <div class="flex-grow-1 me-2">
+                                    <input type="text" class="form-control" 
+                                           th:field="*{weeklyProgram[__${weekStat.index}__].treasuresFromGod[__${assignStat.index}__].name}" 
+                                           placeholder="Assignation Name" required>
+                                </div>
+                                <div class="flex-grow-1 me-2">
+                                    <select class="form-select" 
+                                            th:field="*{weeklyProgram[__${weekStat.index}__].treasuresFromGod[__${assignStat.index}__].publisherId}">
+                                        <option value="">-- Select Publisher --</option>
+                                        <option th:each="publisher : ${publishers}" 
+                                                th:value="${publisher.id}" 
+                                                th:text="${publisher.shortName}"></option>
+                                    </select>
+                                </div>
+                                <div style="width: 100px;" class="me-2">
+                                    <input type="number" class="form-control" 
+                                           th:field="*{weeklyProgram[__${weekStat.index}__].treasuresFromGod[__${assignStat.index}__].duration}" 
+                                           placeholder="Minutes" min="1" required>
+                                </div>
+                                <input type="hidden" 
+                                       th:field="*{weeklyProgram[__${weekStat.index}__].treasuresFromGod[__${assignStat.index}__].type}" 
+                                       value="DISCURSO_TESOROS">
+                                <button type="button" class="btn btn-sm btn-danger remove-assignation">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Apply to the Field Ministry Section -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="section-title">Seamos mejores maestros</h5>
+                            <button type="button" class="btn btn-sm btn-success add-assignation" 
+                                    data-section="applyToTheFieldMinistry" 
+                                    th:data-week-index="${weekStat.index}">
+                                <i class="bi bi-plus-circle"></i> Add Assignation
+                            </button>
+                        </div>
+                        <div class="assignation-container">
+                            <div th:each="assignation, assignStat : *{weeklyProgram[__${weekStat.index}__].applyToTheFieldMinistry}" 
+                                 class="d-flex align-items-center mb-2">
+                                <div class="flex-grow-1 me-2">
+                                    <input type="text" class="form-control" 
+                                           th:field="*{weeklyProgram[__${weekStat.index}__].applyToTheFieldMinistry[__${assignStat.index}__].name}" 
+                                           placeholder="Assignation Name" required>
+                                </div>
+                                <div class="flex-grow-1 me-2">
+                                    <select class="form-select" 
+                                            th:field="*{weeklyProgram[__${weekStat.index}__].applyToTheFieldMinistry[__${assignStat.index}__].publisherId}">
+                                        <option value="">-- Select Publisher --</option>
+                                        <option th:each="publisher : ${publishers}" 
+                                                th:value="${publisher.id}" 
+                                                th:text="${publisher.shortName}"></option>
+                                    </select>
+                                </div>
+                                <div style="width: 100px;" class="me-2">
+                                    <input type="number" class="form-control" 
+                                           th:field="*{weeklyProgram[__${weekStat.index}__].applyToTheFieldMinistry[__${assignStat.index}__].duration}" 
+                                           placeholder="Minutes" min="1" required>
+                                </div>
+                                <input type="hidden" 
+                                       th:field="*{weeklyProgram[__${weekStat.index}__].applyToTheFieldMinistry[__${assignStat.index}__].type}" 
+                                       value="SEAMOS_MEJORES_MAESTROS">
+                                <button type="button" class="btn btn-sm btn-danger remove-assignation">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Song 2 -->
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label">Canción 2</label>
+                                <input type="text" class="form-control" 
+                                       th:field="*{weeklyProgram[__${weekStat.index}__].song2}" 
+                                       placeholder="Song Number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Living as Christians Section -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="section-title">Nuestra vida cristiana</h5>
+                            <button type="button" class="btn btn-sm btn-success add-assignation" 
+                                    data-section="livingAsChristians" 
+                                    th:data-week-index="${weekStat.index}">
+                                <i class="bi bi-plus-circle"></i> Add Assignation
+                            </button>
+                        </div>
+                        <div class="assignation-container">
+                            <div th:each="assignation, assignStat : *{weeklyProgram[__${weekStat.index}__].livingAsChristians}" 
+                                 class="d-flex align-items-center mb-2">
+                                <div class="flex-grow-1 me-2">
+                                    <input type="text" class="form-control" 
+                                           th:field="*{weeklyProgram[__${weekStat.index}__].livingAsChristians[__${assignStat.index}__].name}" 
+                                           placeholder="Assignation Name" required>
+                                </div>
+                                <div class="flex-grow-1 me-2">
+                                    <select class="form-select" 
+                                            th:field="*{weeklyProgram[__${weekStat.index}__].livingAsChristians[__${assignStat.index}__].publisherId}">
+                                        <option value="">-- Select Publisher --</option>
+                                        <option th:each="publisher : ${publishers}" 
+                                                th:value="${publisher.id}" 
+                                                th:text="${publisher.shortName}"></option>
+                                    </select>
+                                </div>
+                                <div style="width: 100px;" class="me-2">
+                                    <input type="number" class="form-control" 
+                                           th:field="*{weeklyProgram[__${weekStat.index}__].livingAsChristians[__${assignStat.index}__].duration}" 
+                                           placeholder="Minutes" min="1" required>
+                                </div>
+                                <input type="hidden" 
+                                       th:field="*{weeklyProgram[__${weekStat.index}__].livingAsChristians[__${assignStat.index}__].type}" 
+                                       value="VIDA_CRISTIANA">
+                                <button type="button" class="btn btn-sm btn-danger remove-assignation">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Song 3 -->
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label">Canción 3</label>
+                                <input type="text" class="form-control" 
+                                       th:field="*{weeklyProgram[__${weekStat.index}__].song3}" 
+                                       placeholder="Song Number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Week Button -->
+            <div class="mb-4" th:if="${program.id != null}">
+                <a th:href="@{/programs/{id}/add-week(id=${program.id})}" class="btn btn-success btn-icon">
+                    <i class="bi bi-plus-circle"></i> Add Weekly Program
+                </a>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-end mb-4">
+                <a th:href="@{/programs}" class="btn btn-secondary me-2">Cancel</a>
+                <button type="submit" class="btn btn-primary btn-icon">
+                    <i class="bi bi-save"></i> 
+                    <span th:text="${program.id != null ? 'Update Program' : 'Create Program'}"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <footer th:replace="fragments/layout :: footer"></footer>
+    <th:block th:replace="fragments/layout :: scripts"></th:block>
+
+    <!-- JavaScript for dynamic assignation handling -->
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add assignation
+            document.querySelectorAll('.add-assignation').forEach(button => {
+                button.addEventListener('click', function() {
+                    const section = this.getAttribute('data-section');
+                    const weekIndex = this.getAttribute('data-week-index');
+                    const container = this.closest('.mb-4').querySelector('.assignation-container');
+
+                    // Get the current count of assignations in this section
+                    const currentCount = container.querySelectorAll('.d-flex').length;
+
+                    // Create new assignation template
+                    const newAssignation = document.createElement('div');
+                    newAssignation.className = 'd-flex align-items-center mb-2';
+
+                    let assignationType = 'DISCURSO_TESOROS';
+                    if (section === 'applyToTheFieldMinistry') {
+                        assignationType = 'SEAMOS_MEJORES_MAESTROS';
+                    } else if (section === 'livingAsChristians') {
+                        assignationType = 'VIDA_CRISTIANA';
+                    }
+
+                    // HTML for the new assignation
+                    newAssignation.innerHTML = `
+                        <div class="flex-grow-1 me-2">
+                            <input type="text" class="form-control" 
+                                   name="weeklyProgram[${weekIndex}].${section}[${currentCount}].name" 
+                                   placeholder="Assignation Name" required>
+                        </div>
+                        <div class="flex-grow-1 me-2">
+                            <select class="form-select" 
+                                    name="weeklyProgram[${weekIndex}].${section}[${currentCount}].publisherId">
+                                <option value="">-- Select Publisher --</option>
+                                ${getPublisherOptions()}
+                            </select>
+                        </div>
+                        <div style="width: 100px;" class="me-2">
+                            <input type="number" class="form-control" 
+                                   name="weeklyProgram[${weekIndex}].${section}[${currentCount}].duration" 
+                                   placeholder="Minutes" min="1" value="10" required>
+                        </div>
+                        <input type="hidden" 
+                               name="weeklyProgram[${weekIndex}].${section}[${currentCount}].type" 
+                               value="${assignationType}">
+                        <button type="button" class="btn btn-sm btn-danger remove-assignation">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    `;
+
+                    container.appendChild(newAssignation);
+
+                    // Add event listener to the new remove button
+                    newAssignation.querySelector('.remove-assignation').addEventListener('click', removeAssignation);
+                });
+            });
+
+            // Remove assignation
+            document.querySelectorAll('.remove-assignation').forEach(button => {
+                button.addEventListener('click', removeAssignation);
+            });
+
+            function removeAssignation() {
+                this.closest('.d-flex').remove();
+            }
+
+            // Function to generate publisher options
+            function getPublisherOptions() {
+                const publishers = /*[[${publishers}]]*/[];
+                return publishers.map(publisher => 
+                    `<option value="${publisher.id}">${publisher.shortName}</option>`
+                ).join('');
+            }
+        });
+    </script>
+</body>
+</html>
