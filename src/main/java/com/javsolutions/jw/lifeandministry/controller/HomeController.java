@@ -19,8 +19,8 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("message", "Welcome to the Life and Ministry Application!");
-        model.addAttribute("title", "Hello World");
-        return "hello";
+        model.addAttribute("title", "Home");
+        return "home";
     }
     
     /**

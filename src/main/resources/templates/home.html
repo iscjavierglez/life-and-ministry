@@ -4,18 +4,18 @@
 </head>
 <body>
     <nav th:replace="fragments/layout :: navbar"></nav>
-    
+
     <div class="container mt-4">
         <header class="text-center mb-4">
             <h1 th:text="${title}">Hello World</h1>
         </header>
-        
+
         <main>
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${message}">Welcome message will appear here</h2>
                     <p class="card-text">This is a simple Thymeleaf example for the Life and Ministry Application.</p>
-                    
+
                     <div class="mt-4">
                         <p>You can navigate to:</p>
                         <div class="d-flex gap-2">
