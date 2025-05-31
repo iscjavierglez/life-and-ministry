@@ -13,7 +13,7 @@
     <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <i class="bi bi-book"></i> Life and Ministry
+                <i class="bi bi-book"></i> Congregación Humaya
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
                 <span class="navbar-toggler-icon"></span>
@@ -31,13 +31,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" th:href="@{/programs}">
                             <i class="bi bi-calendar-week"></i> Programs
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-card-list"></i> Assignations
                         </a>
                     </li>
                 </ul>
@@ -48,7 +43,9 @@
     <!-- Footer -->
     <footer th:fragment="footer" class="footer mt-auto py-3 bg-light">
         <div class="container text-center">
-            <span class="text-muted">© 2023 Life and Ministry Application</span>
+            <span class="text-muted">© 2025 Life and Ministry Application</span>
+            <br>
+            <span class="text-muted">Developed by Javier Gonzalez</span>
         </div>
     </footer>
 

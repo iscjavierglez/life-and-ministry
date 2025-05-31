@@ -7,26 +7,13 @@
 
     <div class="container mt-4">
         <header class="text-center mb-4">
-            <h1 th:text="${title}">Hello World</h1>
+            <h1 th:text="${title}">Life and ministry managment</h1>
         </header>
 
         <main>
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title" th:text="${message}">Welcome message will appear here</h2>
-                    <p class="card-text">This is a simple Thymeleaf example for the Life and Ministry Application.</p>
-
-                    <div class="mt-4">
-                        <p>You can navigate to:</p>
-                        <div class="d-flex gap-2">
-                            <a th:href="@{/publishers}" class="btn btn-primary">
-                                <i class="bi bi-people-fill"></i> Publishers
-                            </a>
-                            <a th:href="@{/}" class="btn btn-outline-secondary">
-                                <i class="bi bi-house-fill"></i> Home
-                            </a>
-                        </div>
-                    </div>
+                    <h2 class="card-title" th:text="${message}">Welcome to your tool to manage the congregation tasks</h2>
                 </div>
             </div>
         </main>
