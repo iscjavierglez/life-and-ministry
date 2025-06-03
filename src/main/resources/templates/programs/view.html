@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="fragments/layout :: head('Life and Ministry Program')">
+<head th:replace="~{fragments/layout :: head('Life and Ministry Program')}">
 </head>
 <body>
-    <nav th:replace="fragments/layout :: navbar"></nav>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
     <div class="container mt-4">
         <!-- Header -->
@@ -68,7 +68,7 @@
 
                 <!-- Apply to the Field Ministry Section -->
                 <div class="mb-4">
-                    <h5 class="section-title bg-secondary text-white p-2">Seamos mejores maestros</h5>
+                    <h5 class="section-title bg-secondary text-white p-2 color-field-ministry">Seamos mejores maestros</h5>
                     <div th:if="${#lists.isEmpty(weekProgram.applyToTheFieldMinistry)}" class="text-muted p-2">
                         No assignations in this section
                     </div>
@@ -91,7 +91,7 @@
 
                 <!-- Living as Christians Section -->
                 <div class="mb-4">
-                    <h5 class="section-title bg-secondary text-white p-2">Nuestra vida cristiana</h5>
+                    <h5 class="section-title bg-secondary text-white p-2 color-livin-christians">Nuestra vida cristiana</h5>
                     <div th:if="${#lists.isEmpty(weekProgram.livingAsChristians)}" class="text-muted p-2">
                         No assignations in this section
                     </div>
@@ -115,7 +115,7 @@
         </div>
     </div>
 
-    <footer th:replace="fragments/layout :: footer"></footer>
-    <th:block th:replace="fragments/layout :: scripts"></th:block>
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 </body>
 </html>

@@ -1,0 +1,24 @@
+Let's work in the life and ministry programs feature, here are the requirements:
+
+1.- Create a new screen that supports all CRUD operations for a program.
+2.- As each month has 1 life and ministry program, and for each month we may have several Weeklyprograms. The default will be to display the current month program. 
+3.- The UI should display all weeks in current month program presenting the different sections in it using below order: 
+
+ For each weekly program
+    First, the title. 
+    Then the president assignation displaying the assignation name and the publisher assigned to it. 
+    Then, Song 1 with the word "Cancion" as prefix
+    Then, a subtitle called "Tesoros de la biblia"
+    Then, treasuresFromGod assignations displaying the assignation name in the left and the publisher assigned to it in the right side. 
+    Then, a subtitle called "Seamos mejores maestros"
+    Then, applyToTheFieldMinistry assignations displaying the assignation name in the left and the publisher assigned to it in the right side. 
+    Then, a subtitle called  "Nuestra vida cristiana"
+    Then, Song 2 with the word "Cancion" as prefix. 
+    Then, livingAsChristians assignations displaying the assignation name in the left and the publisher assigned to it in the right side. 
+    Then, Song 3 with the word "Cancion" as prefix. 
+4.- Regarging the CRUD Operations, here are the requirements
+    - Create a new program feature should display a form with the same format described in bullet 3 with the differente that the form will have input boxes
+    - Create assignations is implicit while creating a life and ministry program, so i need and add assignation button with the form to create a new assignation
+    - Add a reference to a publisher is implicit during the creation of an assignation, so during assignation creation i want to see the available publishers and select one to be assigned to the assignation
+    - I can delete assignations but that should not delete the publisher
+    - I can update an asignation

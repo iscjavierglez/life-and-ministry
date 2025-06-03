@@ -285,40 +285,6 @@ public class LifeAndMinistryController {
     }
 
     /**
-     * Add a new weekly program to an existing program.
-     *
-     * @param id                 the program ID
-     * @param redirectAttributes flash attributes for redirect
-     * @return redirect to edit program form
-     */
-    @GetMapping("/{id}/add-week")
-    public String addWeeklyProgram(
-            @PathVariable String id,
-            RedirectAttributes redirectAttributes) {
-
-        Optional<LifeAndMinistry> programOpt = lifeAndMinistryService.findById(id);
-        if (programOpt.isPresent()) {
-            LifeAndMinistry program = programOpt.get();
-
-            // Create a new weekly program
-            WeeklyProgram weeklyProgram = new WeeklyProgram();
-            weeklyProgram.setTitle("Week " + (program.getWeeklyProgram().size() + 1));
-
-            // Add it to the existing program
-            program.getWeeklyProgram().add(weeklyProgram);
-            lifeAndMinistryService.save(program);
-
-            redirectAttributes.addFlashAttribute("successMessage", 
-                    "Weekly program was added successfully");
-        } else {
-            redirectAttributes.addFlashAttribute("errorMessage", 
-                    "Program not found");
-        }
-
-        return "redirect:/programs/edit/" + id;
-    }
-
-    /**
      * Remove a weekly program from an existing program.
      *
      * @param id        the program ID
@@ -338,6 +304,13 @@ public class LifeAndMinistryController {
 
             // Check if week index is valid
             if (weekIndex >= 0 && weekIndex < program.getWeeklyProgram().size()) {
+                // Check if there's more than one week program
+                if (program.getWeeklyProgram().size() <= 1) {
+                    redirectAttributes.addFlashAttribute("errorMessage", 
+                            "Cannot remove the last weekly program. At least one is required.");
+                    return "redirect:/programs/edit/" + id;
+                }
+
                 // Remove the weekly program
                 program.getWeeklyProgram().remove(weekIndex);
                 lifeAndMinistryService.save(program);

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="fragments/layout :: head(${program.id != null ? 'Edit Program' : 'New Program'})">
+<head th:replace="~{fragments/layout :: head(${program.id != null ? 'Edit Program' : 'New Program'})}">
 </head>
 <body>
-    <nav th:replace="fragments/layout :: navbar"></nav>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
     <div class="container-fluid mt-4">
         <!-- Header -->
@@ -41,18 +41,28 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Add Week Button -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <button type="button" id="add-week-btn" class="btn btn-success">
+                                <i class="bi bi-plus-circle"></i> Add Week
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Weekly Programs -->
-            <div th:each="weekProgram, weekStat : *{weeklyProgram}" class="card mb-4">
+            <!-- Weekly Programs Container -->
+            <div id="weekly-programs-container">
+                <!-- Weekly Programs -->
+                <div th:each="weekProgram, weekStat : *{weeklyProgram}" class="card mb-4 weekly-program-card" th:data-week-index="${weekStat.index}">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" th:field="*{weeklyProgram[__${weekStat.index}__].title}" required>
                     </div>
-                    <button type="button" class="btn btn-sm btn-danger" 
-                            th:if="${program.id != null}"
-                            th:onclick="'window.location.href=\'' + @{/programs/{id}/remove-week/{weekIndex}(id=${program.id},weekIndex=${weekStat.index})} + '\''"
+                    <!-- Remove Week Button -->
+                    <button type="button" class="btn btn-sm btn-danger remove-week-btn" 
+                            th:onclick="${program.id != null} ? 'window.location.href=\'' + @{/programs/{id}/remove-week/{weekIndex}(id=${program.id},weekIndex=${weekStat.index})} + '\'' : 'removeWeek(this)'" 
                             th:disabled="${#lists.size(program.weeklyProgram) <= 1}">
                         <i class="bi bi-trash"></i> Remove Week
                     </button>
@@ -62,11 +72,9 @@
                     <div class="mb-4">
                         <h5 class="section-title">Presidente</h5>
                         <div class="d-flex align-items-center mb-3">
-                            <div class="flex-grow-1 me-2">
-                                <input type="text" class="form-control" 
-                                       th:field="*{weeklyProgram[__${weekStat.index}__].president.name}" 
-                                       placeholder="Assignation Name">
-                            </div>
+                            <input type="hidden"
+                                   th:field="*{weeklyProgram[__${weekStat.index}__].president.name}"
+                                   value="PRESIDENTE">
                             <div class="flex-grow-1 me-2">
                                 <select class="form-select" 
                                         th:field="*{weeklyProgram[__${weekStat.index}__].president.publisherId}">
@@ -76,12 +84,10 @@
                                             th:text="${publisher.shortName}"></option>
                                 </select>
                             </div>
-                            <div style="width: 100px;">
-                                <input type="number" class="form-control" 
-                                       th:field="*{weeklyProgram[__${weekStat.index}__].president.duration}" 
-                                       placeholder="Minutes" min="1">
-                            </div>
-                            <input type="hidden" 
+                            <input type="hidden" class="form-control"
+                                   th:field="*{weeklyProgram[__${weekStat.index}__].president.duration}"
+                                   placeholder="Minutes" min="1" value="1">
+                            <input type="hidden"
                                    th:field="*{weeklyProgram[__${weekStat.index}__].president.type}" 
                                    value="PRESIDENTE">
                         </div>
@@ -91,7 +97,7 @@
                     <div class="mb-4">
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="form-label">Canción 1</label>
+                                <label class="form-label">Canción</label>
                                 <input type="text" class="form-control" 
                                        th:field="*{weeklyProgram[__${weekStat.index}__].song1}" 
                                        placeholder="Song Number">
@@ -109,7 +115,7 @@
                                 <i class="bi bi-plus-circle"></i> Add Assignation
                             </button>
                         </div>
-                        <div class="assignation-container">
+                        <div class="assignation-container" data-section="treasuresFromGod">
                             <div th:each="assignation, assignStat : *{weeklyProgram[__${weekStat.index}__].treasuresFromGod}" 
                                  class="d-flex align-items-center mb-2">
                                 <div class="flex-grow-1 me-2">
@@ -151,7 +157,7 @@
                                 <i class="bi bi-plus-circle"></i> Add Assignation
                             </button>
                         </div>
-                        <div class="assignation-container">
+                        <div class="assignation-container" data-section="applyToTheFieldMinistry">
                             <div th:each="assignation, assignStat : *{weeklyProgram[__${weekStat.index}__].applyToTheFieldMinistry}" 
                                  class="d-flex align-items-center mb-2">
                                 <div class="flex-grow-1 me-2">
@@ -187,7 +193,7 @@
                     <div class="mb-4">
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="form-label">Canción 2</label>
+                                <label class="form-label">Canción</label>
                                 <input type="text" class="form-control" 
                                        th:field="*{weeklyProgram[__${weekStat.index}__].song2}" 
                                        placeholder="Song Number">
@@ -205,7 +211,7 @@
                                 <i class="bi bi-plus-circle"></i> Add Assignation
                             </button>
                         </div>
-                        <div class="assignation-container">
+                        <div class="assignation-container" data-section="livingAsChristians">
                             <div th:each="assignation, assignStat : *{weeklyProgram[__${weekStat.index}__].livingAsChristians}" 
                                  class="d-flex align-items-center mb-2">
                                 <div class="flex-grow-1 me-2">
@@ -241,13 +247,157 @@
                     <div class="mb-4">
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="form-label">Canción 3</label>
+                                <label class="form-label">Canción</label>
                                 <input type="text" class="form-control" 
                                        th:field="*{weeklyProgram[__${weekStat.index}__].song3}" 
                                        placeholder="Song Number">
                             </div>
                         </div>
                     </div>
+                                    </div>
+                                </div> <!-- End of weekly program card -->
+                    </div> <!-- End of weekly programs container -->
+
+                    <!-- Submit Button -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Save Program
+                            </button>
+                        </div>
+                    </div>
+                            </form>
+
+                <!-- Week Template (Hidden) -->
+                <template id="week-template">
+                    <div class="card mb-4 weekly-program-card" data-week-index="0">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <input type="text" class="form-control me-2" name="weeklyProgram[0].title" value="New Week" required>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-danger remove-week-btn">
+                                <i class="bi bi-trash"></i> Remove Week
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <!-- President Section -->
+                            <div class="mb-4">
+                                <h5 class="section-title">Presidente</h5>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="flex-grow-1 me-2">
+                                        <input type="text" class="form-control" 
+                                               name="weeklyProgram[0].president.name" 
+                                               placeholder="Assignation Name">
+                                    </div>
+                                    <div class="flex-grow-1 me-2">
+                                        <select class="form-select" 
+                                                name="weeklyProgram[0].president.publisherId">
+                                            <option value="">-- Select Publisher --</option>
+                                            <option th:each="publisher : ${publishers}" 
+                                                    th:value="${publisher.id}" 
+                                                    th:text="${publisher.shortName}"></option>
+                                        </select>
+                                    </div>
+                                    <div style="width: 100px;">
+                                        <input type="number" class="form-control" 
+                                               name="weeklyProgram[0].president.duration" 
+                                               placeholder="Minutes" min="1">
+                                    </div>
+                                    <input type="hidden" 
+                                           name="weeklyProgram[0].president.type" 
+                                           value="PRESIDENTE">
+                                </div>
+                            </div>
+
+                            <!-- Song 1 -->
+                            <div class="mb-4">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Canción 1</label>
+                                        <input type="text" class="form-control" 
+                                               name="weeklyProgram[0].song1" 
+                                               placeholder="Song Number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Treasures from God Section -->
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="section-title">Tesoros de la biblia</h5>
+                                    <button type="button" class="btn btn-sm btn-success add-assignation" 
+                                            data-section="treasuresFromGod" 
+                                            data-week-index="0">
+                                        <i class="bi bi-plus-circle"></i> Add Assignation
+                                    </button>
+                                </div>
+                                <div class="assignation-container" data-section="treasuresFromGod">
+                                    <!-- Assignations will be added dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Apply to the Field Ministry Section -->
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="section-title">Seamos mejores maestros</h5>
+                                    <button type="button" class="btn btn-sm btn-success add-assignation" 
+                                            data-section="applyToTheFieldMinistry" 
+                                            data-week-index="0">
+                                        <i class="bi bi-plus-circle"></i> Add Assignation
+                                    </button>
+                                </div>
+                                <div class="assignation-container" data-section="applyToTheFieldMinistry">
+                                    <!-- Assignations will be added dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Song 2 -->
+                            <div class="mb-4">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Canción 2</label>
+                                        <input type="text" class="form-control" 
+                                               name="weeklyProgram[0].song2" 
+                                               placeholder="Song Number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Living as Christians Section -->
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="section-title">Nuestra vida cristiana</h5>
+                                    <button type="button" class="btn btn-sm btn-success add-assignation" 
+                                            data-section="livingAsChristians" 
+                                            data-week-index="0">
+                                        <i class="bi bi-plus-circle"></i> Add Assignation
+                                    </button>
+                                </div>
+                                <div class="assignation-container" data-section="livingAsChristians">
+                                    <!-- Assignations will be added dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Song 3 -->
+                            <div class="mb-4">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Canción 3</label>
+                                        <input type="text" class="form-control" 
+                                               name="weeklyProgram[0].song3" 
+                                               placeholder="Song Number">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                    <!-- JavaScript for form functionality -->
+                    <script th:src="@{/js/programs.js}"></script>
+                        </div>
+                    </body>
+                    </html>
                 </div>
             </div>
 
@@ -269,8 +419,8 @@
         </form>
     </div>
 
-    <footer th:replace="fragments/layout :: footer"></footer>
-    <th:block th:replace="fragments/layout :: scripts"></th:block>
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 
     <!-- JavaScript for dynamic assignation handling -->
     <script th:inline="javascript">
