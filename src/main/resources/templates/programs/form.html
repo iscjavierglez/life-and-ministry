@@ -266,7 +266,7 @@
                             </button>
                         </div>
                     </div>
-                            </form>
+                </form>
 
                 <!-- Week Template (Hidden) -->
                 <template id="week-template">
@@ -284,11 +284,9 @@
                             <div class="mb-4">
                                 <h5 class="section-title">Presidente</h5>
                                 <div class="d-flex align-items-center mb-3">
-                                    <div class="flex-grow-1 me-2">
-                                        <input type="text" class="form-control" 
-                                               name="weeklyProgram[0].president.name" 
-                                               placeholder="Assignation Name">
-                                    </div>
+                                    <input type="hidden" class="form-control"
+                                           name="weeklyProgram[0].president.name"
+                                           value="PRESIDENTE">
                                     <div class="flex-grow-1 me-2">
                                         <select class="form-select" 
                                                 name="weeklyProgram[0].president.publisherId">
@@ -298,12 +296,10 @@
                                                     th:text="${publisher.shortName}"></option>
                                         </select>
                                     </div>
-                                    <div style="width: 100px;">
-                                        <input type="number" class="form-control" 
-                                               name="weeklyProgram[0].president.duration" 
-                                               placeholder="Minutes" min="1">
-                                    </div>
-                                    <input type="hidden" 
+                                    <input type="hidden" class="form-control"
+                                           name="weeklyProgram[0].president.duration"
+                                           placeholder="Minutes" min="1" value="1">
+                                    <input type="hidden"
                                            name="weeklyProgram[0].president.type" 
                                            value="PRESIDENTE">
                                 </div>
